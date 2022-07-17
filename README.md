@@ -1,8 +1,8 @@
 # UFOTown Mint Page
-
 A mint page for NFT projects built in React with Material UI components.
+Please do not use it in production. The site is still in the early stage.
 
-Used frameworks and libraries:
+## Used frameworks and libraries:
 - React
 - Material UI
 - Web3.js
