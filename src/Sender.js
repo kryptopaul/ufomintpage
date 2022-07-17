@@ -14,12 +14,6 @@ export default function Sender(props) {
     const [account , setAccount] = useState(null);
     const [network , setNetwork] = useState(null);
 
-    // Input Validation
-    const [sendToAddress , setSendToAddress] = useState(null);
-    const [sendAmount , setSendAmount] = useState(null);
-    const [sendToAddressError, setSendToAddressError] = useState({error: false, message: ""});
-    const [sendAmountError, setSendAmountError] = useState({error: false, message: ""});
-
 
     //State for button loading
     const [isLoading, setIsLoading] = useState(false);
@@ -85,6 +79,7 @@ export default function Sender(props) {
         } catch(err){
             console.log("Error: " + err)
             setIsLoading(false);
+            setTransactionStatus({status: false, err: err});
         }
         }
 
@@ -101,20 +96,26 @@ export default function Sender(props) {
     }
 
     const successAlert = () => {
+        if (transactionStatus.status === true){
         return(
             <div>
 <Alert onClose={() => {setTransactionStatus(null)}}>Success! — Track your transaction on <a href={`https://ropsten.etherscan.io/tx/` + transactionStatus.txId} target="_blank" rel="noreferrer">Etherscan</a></Alert>
 </div>
-        )
+        )} else if (transactionStatus.status === false){
+            return(
+                <div>
+<Alert onClose={() => {setTransactionStatus(null)}} severity="error">{`Error! ` + transactionStatus.err.message}</Alert>
+</div>
+            )
+        }
     }
 
     const fieldsIfConnected = () => {
         return(
             
         <div>
-            <img src="https://i.imgur.com/V8C19D5.gif" style={{height: '250px'}}></img>           
-            <h2 style={{wordBreak: 'break-word'}}>Your address is: {account}</h2>
-            <h2 style={{wordBreak: 'break-word'}}>Currently connected to: {network}</h2>
+            <img src="https://i.imgur.com/V8C19D5.gif" alt="UFOTown GIF" style={{height: '250px'}}></img>           
+            <h3 style={{wordBreak: 'break-word'}}>Your address is: {account}</h3>
                 
         </div>)
     }
@@ -126,7 +127,7 @@ export default function Sender(props) {
 
 
             <div style={{ borderRadius: '25px', padding: '20px', margin:'25px'}}>
-                <h1>Welcome to UFOTown Mint! 👽</h1>
+                <h1>Welcome to UFOTown Mint!</h1>
         
                 {isConnected ? fieldsIfConnected() : null}
                 {isConnected ? sendButton() : connectWalletButton()}
