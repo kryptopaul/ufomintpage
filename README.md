@@ -17,3 +17,7 @@ In the project directory, run:
 
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+## TODO:
+- Change variable & component names
+- Replace the "send 0.1eth transaction" with an actual contract
+
